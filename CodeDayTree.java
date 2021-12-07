@@ -18,31 +18,56 @@ public class CodeDayTree {
             }
             
             in.close();
-            String G = "";
-            int p = 0;
+            String ossigeno = "";
             for(int c=0; c<12;c++){
                 int contuno = 0;
                 int contzero = 0;
+                int contanumero = 0;
                 for(int r=0; r<1000; r++){
-                    char carattere = dati[r].charAt(p);
+                    char carattere = dati[r].charAt(c);
                     if(carattere == '1'){
-                    }else{
+                        contuno++;
+                        contanumero++;
+                    }else if (carattere == '0'){
                         contzero++;
+                        contanumero++;
                     }
                     
                 }
-                p++;
-            
-                if(contuno > contzero){
-                    G = G + "1";
+                
+                if(contuno >= contzero){
+                    //tutti quelli con lo 0 devono essere cancellati
+                    for(int r=0; r<1000; r++){
+                        char carattere = dati[r].charAt(c);
+                        if(carattere == '0'){
+                            dati[r].replace('0', '5');
+                            dati[r].replace('1', '5');
+                        } 
+                    }
                 }
                 else{
-                    G = G + "0";
-                }
+                    //tutti quelli con l'1 devono essere cancellati
+                    for(int r=0; r<1000; r++){
+                        char carattere = dati[r].charAt(c);
+                        if(carattere == '1'){
+                            dati[r].replace('0', '5');
+                            dati[r].replace('1', '5');
+                        }
             
+                     }
+                }
+
+                if(contanumero == 1){
+                    ossigeno = "trovato";
+                }
+            }
+            for(int c=0; c<12;c++){
+                for(int r=0; r<1000; r++){
+                  System.out.println(dati[r]);  
+                }}
+            System.out.println(ossigeno);
         }
-        System.out.println(G);
-    }
+        
         catch(FileNotFoundException e){
             System.out.println("ERROR");
     
